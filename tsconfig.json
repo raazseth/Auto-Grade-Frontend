@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "paths": {
+      "@pages/*": ["src/Pages/*"],
+      "@components/*": ["src/Components/*"],
+      "@api/*": ["src/APIs/*"],
+      "@typed/*": ["src/Types/*"],
+      "@assets/*": ["src/Assets/*"],
+      "@utils/*": ["src/Utils/*"],
+      "@layout/*": ["src/Layout/*"]
+    }
+  },
+  "include": ["src/**/*"]
+}
