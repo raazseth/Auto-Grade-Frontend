@@ -16,7 +16,8 @@
       "@typed/*": ["src/Types/*"],
       "@assets/*": ["src/Assets/*"],
       "@utils/*": ["src/Utils/*"],
-      "@layout/*": ["src/Layout/*"]
+      "@layout/*": ["src/Layout/*"],
+      "@store/*": ["src/Store/*"],
     }
   },
   "include": ["src/**/*"]

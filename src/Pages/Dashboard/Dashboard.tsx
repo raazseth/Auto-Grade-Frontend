@@ -2,9 +2,7 @@ import Body from "@layout/Body";
 
 const Dashboard = () => {
   return (
-    <Body
-      title="Dashboard"
-    >
+    <Body title="Dashboard">
       <div>Dashboard</div>
     </Body>
   );
