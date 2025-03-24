@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "@pages/NotFound";
 import Dashboard from "@pages/Dashboard/Dashboard";
@@ -10,8 +11,27 @@ import Settings from "@pages/Settings/Settings";
 import Auth from "@pages/Auth/Auth";
 
 function App() {
-  const isAuth = true;
+  const [isAuth, setIsAuth] = useState(
+    localStorage.getItem("isAuth") === "true"
+  );
 
+  const handleAuth = () => {
+    const accessKey = prompt("Enter the access key to proceed:");
+    if (accessKey.toLocaleLowerCase() === "hashout") {
+      setIsAuth(true);
+      localStorage.setItem("isAuth", "true");
+    } else {
+      alert("Invalid key! Access denied.");
+      setIsAuth(false);
+      localStorage.removeItem("isAuth");
+    }
+  };
+
+  useEffect(() => {
+    if (!isAuth) handleAuth();
+  }, [isAuth]);
+
+  if(!isAuth) return null;
   return (
     <Router>
       {isAuth ? (
