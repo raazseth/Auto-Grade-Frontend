@@ -2,14 +2,13 @@ import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import {
-  FaArrowUp,
   FaHome,
-  FaUser,
-  FaCog,
-  FaBell,
-  FaEnvelope,
-  FaInfoCircle,
   FaSearch,
+  FaChalkboardTeacher,
+  FaClipboardList,
+  FaChartBar,
+  FaUserCircle,
+  FaCog,
 } from "react-icons/fa";
 import "./Styles/Footer.css";
 
@@ -18,27 +17,46 @@ export interface FooterProps {
 }
 
 const ICON_SIZE = 20;
-
+const ICON_COLOR = "#333";
 const Footer: FC<FooterProps> = ({ type = "sticky" }) => {
   const location = useLocation();
 
   const StickyItems = [
-    { icon: <FaHome size={ICON_SIZE} />, label: "Home", path: "/" },
-    { icon: <FaSearch size={ICON_SIZE} />, label: "Search", path: "/search" },
     {
-      icon: <FaBell size={ICON_SIZE} />,
-      label: "Notifications",
-      path: "/notifications",
+      icon: <FaHome size={ICON_SIZE} color={ICON_COLOR} />,
+      label: "Home",
+      path: "/",
     },
     {
-      icon: <FaEnvelope size={ICON_SIZE} />,
-      label: "Messages",
-      path: "/messages",
+      icon: <FaSearch size={ICON_SIZE} color={ICON_COLOR} />,
+      label: "Search",
+      path: "/search",
     },
-    { icon: <FaUser size={ICON_SIZE} />, label: "Profile", path: "/profile" },
-    { icon: <FaCog size={ICON_SIZE} />, label: "Settings", path: "/settings" },
-    { icon: <FaInfoCircle size={ICON_SIZE} />, label: "Info", path: "/info" },
-    { icon: <FaArrowUp size={ICON_SIZE} />, label: "Top", path: "/top" },
+    {
+      icon: <FaChalkboardTeacher size={ICON_SIZE} color={ICON_COLOR} />,
+      label: "Classes",
+      path: "/classes",
+    },
+    {
+      icon: <FaClipboardList size={ICON_SIZE} color={ICON_COLOR} />,
+      label: "Assignment",
+      path: "/assignment",
+    },
+    {
+      icon: <FaChartBar size={ICON_SIZE} color={ICON_COLOR} />,
+      label: "Report",
+      path: "/report",
+    },
+    {
+      icon: <FaUserCircle size={ICON_SIZE} color={ICON_COLOR} />,
+      label: "Profile",
+      path: "/profile",
+    },
+    {
+      icon: <FaCog size={ICON_SIZE} color={ICON_COLOR} />,
+      label: "Settings",
+      path: "/settings",
+    },
   ];
 
   if (type === "sticky") {
@@ -51,7 +69,7 @@ const Footer: FC<FooterProps> = ({ type = "sticky" }) => {
             <Tooltip title={isActive ? "" : item.label} key={index} arrow>
               <Box
                 className={`footer-icon-button ${
-                  isActive ? "active animate__animated animate__slideInUp" : ""
+                  isActive ? "active animate__animated animate__fadeIn" : ""
                 }`}
               >
                 <Link to={item.path}>

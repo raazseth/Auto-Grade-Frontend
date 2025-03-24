@@ -1,8 +1,7 @@
+import Body from "@layout/Body";
 
 const Auth = () => {
-  return (
-    <div>Auth</div>
-  )
-}
+  return <Body showFooter={false}>Auth</Body>
+};
 
-export default Auth
+export default Auth;

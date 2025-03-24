@@ -1,0 +1,8 @@
+Home
+Search
+Classes (List of classes with students [fetch filter comparsion by subject])
+Manage/create assignment (different types of assignment including quizzes)
+Report (generate report of the assignment with individual student stats)
+Profile 
+Setting
+

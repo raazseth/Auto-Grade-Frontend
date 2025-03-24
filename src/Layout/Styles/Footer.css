@@ -5,13 +5,13 @@
   transform: translateX(-50%);
   display: flex;
   justify-content: space-around;
-  width: 40%;
+  width: 38%;
   border-radius: 12px;
-  padding: 4px 4px;
-  box-shadow: rgba(197, 205, 213, 0.2) 0px 8px 24px;
+  padding: 4px 0;
+  box-shadow: rgba(197, 205, 213, 0.115) 0px 8px 24px;
   z-index: 1000;
   background-color: var(--white);
-  height: 50px;
+  height: 48px;
   overflow: hidden;
 }
 .footer-icon-button {
@@ -20,11 +20,13 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  padding: 8px 12px;
+  opacity: 0.9;
+  border-radius: 8px;
 }
 .footer-icon-button.active {
   background: #e6dee96c;
-  padding: 8px 12px;
-  border-radius: 8px;
+  opacity: 1;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
