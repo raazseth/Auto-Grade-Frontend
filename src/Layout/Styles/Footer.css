@@ -6,13 +6,31 @@
   display: flex;
   justify-content: space-around;
   width: 38%;
-  border-radius: 12px;
-  padding: 4px 0;
-  box-shadow: rgba(197, 205, 213, 0.115) 0px 8px 24px;
+  border-radius: .6rem;
   z-index: 1000;
   background-color: var(--white);
   height: 48px;
   overflow: hidden;
+  padding: 1px 0;
+/* 
+  border: 1px solid transparent;
+  background-image: linear-gradient(var(--white), var(--white)),
+    linear-gradient(45deg, #d4d4d47b, #d7dc4988, #88e36e, #bfc0c0, #ccd5ae, #a8b8c9);
+
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+
+  animation: shine 8s linear infinite;
+  background-size: 200% auto; */
+  box-shadow: 0px 0px .9310142993927002px 0px rgba(0, 0, 0, .17), 0px 0px 3.1270833015441895px 0px rgba(0, 0, 0, .08), 0px 7px 14px 0px rgba(0, 0, 0, .05);
+}
+@keyframes shine {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 .footer-icon-button {
   display: flex;
@@ -20,6 +38,8 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  height: 24px;
+  margin: auto ;
   padding: 8px 12px;
   opacity: 0.9;
   border-radius: 8px;

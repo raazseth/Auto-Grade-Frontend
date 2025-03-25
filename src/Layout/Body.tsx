@@ -1,4 +1,4 @@
-import { FC, useEffect, ReactNode } from "react";
+import { FC, useEffect, ReactNode, CSSProperties } from "react";
 import Footer, { FooterProps } from "./Footer";
 import Header from "./Header";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -13,15 +13,17 @@ interface BodyProps {
     footerProps?: FooterProps;
   };
   isLoading?: boolean;
+  sx?: CSSProperties;
   children?: ReactNode;
 }
 
 const Body: FC<BodyProps> = ({
   title = "GDG",
-  showHeader = false,
+  showHeader = true,
   showFooter = true,
   isLoading = false,
   configs,
+  sx,
   children,
 }) => {
   useEffect(() => {
@@ -30,8 +32,8 @@ const Body: FC<BodyProps> = ({
 
   return (
     <Box className="body-container">
-      {showHeader && <Header />}
-      <Box component="main" className="body-main fade-in">
+      <Box className="body-header">{showHeader && <Header />}</Box>
+      <Box style={sx} component="main" className="body-main fade-in">
         {children}
         {isLoading && (
           <div className="loading-overlay">

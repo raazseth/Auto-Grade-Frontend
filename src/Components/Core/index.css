@@ -1,0 +1,15 @@
+.core_text {
+  font-family: "Arial", sans-serif;
+}
+
+.core_text.primary {
+  color: var(--primary);
+}
+
+.core_text.white {
+  color: var(--white);
+}
+
+.core_text.secondary {
+  color: var(--secondary);
+}

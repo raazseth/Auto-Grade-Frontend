@@ -4,28 +4,29 @@ import {
   InputBase,
   FormControl,
   InputLabel,
+  Select as MuiSelect,
+  MenuItem,
   FormHelperText,
-  InputBaseProps,
+  SelectProps,
   FormControlProps,
+  Tooltip,
 } from "@mui/material";
 
-interface IInput extends InputBaseProps {
+type ISelect = SelectProps & {
   label?: string;
   helperText?: string;
+  options: { value: string | number; label: string }[];
   parent?: FormControlProps;
-}
+};
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
     marginTop: theme.spacing(2.6),
-    color: "var(--secondary)",
   },
   "& .MuiInputBase-input": {
     borderRadius: 4,
     position: "relative",
-    backgroundColor: "transparent",
     border: "1px solid #E0E3E7",
-    color: "black",
     fontSize: 16,
     width: "100%",
     padding: "10px 12px",
@@ -47,25 +48,36 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
       '"Segoe UI Symbol"',
     ].join(","),
     "&:focus": {
-      boxShadow: `${alpha("#09203f", 0.25)} 0 0 0 0.2rem`,
-      borderColor: "#537895",
-      backgroundColor: "#fff",
+      boxShadow: `${alpha("#ff711f", 0.25)} 0 0 0 0.2rem`,
+      borderColor: "#ff711f",
     },
   },
 }));
 
-const Input: FC<IInput> = ({ label, helperText, parent, ...props }) => {
+const Select: FC<ISelect> = ({
+  label,
+  helperText,
+  parent,
+  options,
+  ...props
+}) => {
   return (
     <FormControl variant="standard" {...parent}>
       {label && (
-        <InputLabel shrink htmlFor="bootstrap-input">
-          {label}
-        </InputLabel>
+        <Tooltip title={label}>
+          <InputLabel shrink>{label}</InputLabel>
+        </Tooltip>
       )}
-      <BootstrapInput {...props} />
+      <MuiSelect {...props} input={<BootstrapInput />}>
+        {options.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </MuiSelect>
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
   );
 };
 
-export default Input;
+export default Select;

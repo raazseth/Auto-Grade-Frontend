@@ -1,0 +1,35 @@
+.header-main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid rgba(211, 211, 211, 0.411);
+  padding: 0 4px;
+  padding-bottom: 10px;
+  color: azure;
+}
+.search-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: auto;
+  cursor: pointer;
+  opacity: 0.8;
+  width: 100%;
+}
+.search-box:hover {
+  opacity: 1;
+  transition: 0.3s ease-in-out;
+}
+.search-box span {
+  margin-left: 10px;
+  font-size: 17px;
+}
+.pfp {
+  width: 44px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--white);
+  margin-left: 12px;
+}
