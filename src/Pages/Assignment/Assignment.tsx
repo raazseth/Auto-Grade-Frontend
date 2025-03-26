@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import Input from "@components/Core/Input";
 import Text from "@components/Core/Text";
 import Button from "@components/Core/Button";
+import Select from "@components/Core/Select";
 import { useState } from "react";
 import AssignmentCard from "@components/AssignmentCard";
 
@@ -82,12 +83,41 @@ const Assignment = () => {
               Create Assignment
             </Text>
             <Input
+              parent={{ sx: { mt: 2 } }}
+              label="Assignment Prompt"
+              placeholder="Enter Assignment Prompt"
+              rows={5}
+              multiline
+              onChange={handleChange}
+              name="assignmentPrompt"
+              value={bodyData.assignmentPrompt}
+            />
+            <Input
               label="Assignment Name"
               placeholder="Enter Assignment Name"
               onChange={handleChange}
               name="assignmentName"
               value={bodyData.assignmentName}
+              parent={{ sx: { mt: 2 } }}
             />
+            <Select
+              parent={{ sx: { mt: 2 } }}
+              options={[
+                {
+                  value: "ASSIGNMENT_SEVERITY_UNSPECIFIED",
+                  label: "No severity specified",
+                },
+                { value: "NOT_APPLICABLE", label: "Not applicable" },
+                { value: "MILD", label: "Mild" },
+                { value: "MODERATE", label: "Moderate" },
+                { value: "SEVERE", label: "Severe" },
+              ]}
+              label={"Assignment Severeity"}
+              onChange={handleChange}
+              name="assignmentSevereity"
+              value={bodyData.assignmentSevereity}
+            />
+
             <Input
               parent={{ sx: { mt: 2 } }}
               label="Assignment Description"
@@ -98,14 +128,71 @@ const Assignment = () => {
               name="assignmentDescription"
               value={bodyData.assignmentDescription}
             />
-            <Input
+            <Select
               parent={{ sx: { mt: 2 } }}
-              label="Assignment Type"
-              placeholder="Enter Assignment Type"
+              options={[
+                {
+                  value: "COURSE_WORK_TYPE_UNSPECIFIED",
+                  label: "No work type specified",
+                },
+                { value: "ASSIGNMENT", label: "Assignment" },
+                {
+                  value: "QUIZ",
+                  label: "Quiz",
+                },
+              ]}
+              label={"Assignment Type"}
               onChange={handleChange}
               name="assignmentType"
               value={bodyData.assignmentType}
             />
+            {bodyData.assignmentType === "QUIZ" &&
+               <Input
+               parent={{ sx: { mt: 2 } }}
+               label="Number of Questions"
+               type="number"
+               placeholder="Enter Number of Questions"
+               onChange={handleChange}
+               name="numberOfQuestions"
+               value={bodyData.numberOfQuestions}
+             />
+            }
+            <Select
+              parent={{ sx: { mt: 2 } }}
+              label="Assignment Grade Term"
+              options={[
+                {
+                  value: "FORMULA_BASED_GRADE",
+                  label: "Formula based grade (Attendance + Assignment)",
+                },
+                {
+                  value: "DIRECT_GRADE",
+                  label: "Direct grade (assignment only)",
+                },
+                {
+                  value: "NOT_APPLICABLE",
+                  label: "Not applicable",
+                },
+                {
+                  value: "UNSPECIFIED_GRADE",
+                  label: "Unspecified grade",
+                },
+              ]}
+              onChange={handleChange}
+              name="assignmentGradeTerm"
+              value={bodyData.assignmentGradeTerm}
+            />
+            {bodyData.assignmentGradeTerm === "FORMULA_BASED_GRADE" && (
+              <Input
+                parent={{ sx: { mt: 2 } }}
+                label="Upload Attendance File (csv)"
+                type="file"
+                placeholder="Upload Attendance File"
+                onChange={handleChange}
+                name="attendanceFile"
+                value={bodyData.attendanceFile}
+              />
+            )}
             <Input
               parent={{ sx: { mt: 2 } }}
               label="Max Marks"
@@ -135,6 +222,15 @@ const Assignment = () => {
                 name="dueTime"
               />
             </Box>
+            <Input
+              parent={{ sx: { mt: 2 } }}
+              label="Material File"
+              type="file"
+              placeholder="Upload Material File"
+              onChange={handleChange}
+              name="materialFile"
+              value={bodyData.materialFile}
+            />
             <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
               <Button
                 style={{

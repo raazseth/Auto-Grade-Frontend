@@ -48,8 +48,8 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
       '"Segoe UI Symbol"',
     ].join(","),
     "&:focus": {
-      boxShadow: `${alpha("#ff711f", 0.25)} 0 0 0 0.2rem`,
-      borderColor: "#ff711f",
+      boxShadow: `${alpha("#537895", 0.25)} 0 0 0 0.2rem`,
+      borderColor: "#537895",
     },
   },
 }));
