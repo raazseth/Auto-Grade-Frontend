@@ -32,8 +32,9 @@ function App() {
   }, [isAuthorized]);
 
   if (!isAuthorized) return null;
-  const isAuth = false;
   
+  const isAuth = false;
+
   return (
     <Router>
       {isAuth ? (
