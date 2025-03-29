@@ -1,0 +1,22 @@
+.Auth {
+  background-color: rgba(250, 235, 215, 0.185);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Auth-Box {
+  width: 320px;
+  height: 200px;
+  background-color: #fff;
+  padding:24px 16px;
+  border-radius: 12px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+}

@@ -11,27 +11,29 @@ import Settings from "@pages/Settings/Settings";
 import Auth from "@pages/Auth/Auth";
 
 function App() {
-  const [isAuth, setIsAuth] = useState(
+  const [isAuthorized, setisAuthorized] = useState(
     localStorage.getItem("isAuth") === "true"
   );
 
   const handleAuth = () => {
     const accessKey = prompt("Enter the access key to proceed:");
     if (accessKey.toLocaleLowerCase() === "hashout") {
-      setIsAuth(true);
+      setisAuthorized(true);
       localStorage.setItem("isAuth", "true");
     } else {
       alert("Invalid key! Access denied.");
-      setIsAuth(false);
+      setisAuthorized(false);
       localStorage.removeItem("isAuth");
     }
   };
 
   useEffect(() => {
-    if (!isAuth) handleAuth();
-  }, [isAuth]);
+    if (!isAuthorized) handleAuth();
+  }, [isAuthorized]);
 
-  if(!isAuth) return null;
+  if (!isAuthorized) return null;
+  const isAuth = false;
+  
   return (
     <Router>
       {isAuth ? (

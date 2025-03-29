@@ -5,8 +5,10 @@ import Input from "@components/Core/Input";
 import Text from "@components/Core/Text";
 import Button from "@components/Core/Button";
 import Select from "@components/Core/Select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AssignmentCard from "@components/AssignmentCard";
+import { getAllCourses, saveAssignment } from "../../APIs/misc";
+import { IClassroom } from "@typed/Misc";
 
 const DUMMY_ASSIGNMENTS = [
   {
@@ -69,10 +71,44 @@ const Assignment = () => {
   const [pageType, setPageType] = useState<"Create" | "View">("View");
   const [data, setData] = useState(DUMMY_ASSIGNMENTS);
   const [bodyData, setbodyData] = useState<any>({});
+  const [classes, setclasses] = useState<
+    { label: string; value: string }[] | []
+  >([]);
 
+  const getCourses = async () => {
+    try {
+      const res = (await getAllCourses()) as any;
+      console.log(res, "nsdjjdis");
+      if (!res.courses.length) {
+        return;
+      }
+      const ids = res.courses.map((cls: IClassroom) => {
+        return {
+          label: cls.name,
+          value: cls.id,
+        };
+      });
+      setclasses(ids || []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCourses();
+  }, []);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setbodyData({ ...bodyData, [name]: value });
+  };
+
+  const handleSave = async () => {
+    try {
+      const response = await saveAssignment(bodyData);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const getPageType = () => {
     switch (pageType) {
@@ -128,6 +164,16 @@ const Assignment = () => {
               name="assignmentDescription"
               value={bodyData.assignmentDescription}
             />
+            {classes.length > 0 && (
+              <Select
+                parent={{ sx: { mt: 2 } }}
+                options={classes}
+                label={"Class"}
+                onChange={handleChange}
+                name="courseName"
+                value={bodyData.courseName}
+              />
+            )}
             <Select
               parent={{ sx: { mt: 2 } }}
               options={[
@@ -146,17 +192,17 @@ const Assignment = () => {
               name="assignmentType"
               value={bodyData.assignmentType}
             />
-            {bodyData.assignmentType === "QUIZ" &&
-               <Input
-               parent={{ sx: { mt: 2 } }}
-               label="Number of Questions"
-               type="number"
-               placeholder="Enter Number of Questions"
-               onChange={handleChange}
-               name="numberOfQuestions"
-               value={bodyData.numberOfQuestions}
-             />
-            }
+            {bodyData.assignmentType === "QUIZ" && (
+              <Input
+                parent={{ sx: { mt: 2 } }}
+                label="Number of Questions"
+                type="number"
+                placeholder="Enter Number of Questions"
+                onChange={handleChange}
+                name="numberOfQuestions"
+                value={bodyData.numberOfQuestions}
+              />
+            )}
             <Select
               parent={{ sx: { mt: 2 } }}
               label="Assignment Grade Term"
@@ -247,6 +293,7 @@ const Assignment = () => {
                 onClick={() => {
                   console.log(bodyData);
                   setData([...data, bodyData]);
+                  handleSave();
                 }}
                 style={{ width: "40%", marginLeft: "8px" }}
               >
