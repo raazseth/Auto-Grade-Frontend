@@ -5,17 +5,46 @@ export const saveAssignment = (
   token: string
 ): Promise<any> => {
   return new Promise((resolve, reject) => {
-    console.log(assignment, "djsidi");
+    let body: BodyInit;
+    let headers: Record<string, string> = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    if (assignment?.materialFile) {
+      const form = new FormData();
+      Object.keys(assignment).forEach((key) => {
+        if (key === "materialFile" && assignment.materialFile instanceof File) {
+          form.append(key, assignment.materialFile);
+        } else if (
+          typeof assignment[key] === "object" &&
+          assignment[key] !== null
+        ) {
+          form.append(key, JSON.stringify(assignment[key]));
+        } else {
+          form.append(key, assignment[key]);
+        }
+      });
+      body = form;
+    } else {
+      body = JSON.stringify(assignment);
+      headers["Content-Type"] = "application/json";
+    }
+
     fetch(API.createAssignment, {
       method: "POST",
-      body: assignment?.materialFile ? assignment : JSON.stringify(assignment),
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": assignment?.materialFile
-          ? "multipart/form-data"
-          : "application/json",
-      },
+      body,
+      headers,
     })
+    // fetch(API.createAssignment, {
+    //   method: "POST",
+    //   body: assignment?.materialFile ? assignment : JSON.stringify(assignment),
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //     "Content-Type": assignment?.materialFile
+    //       ? "multipart/form-data"
+    //       : "application/json",
+    //   },
+    // })
       .then((response) => {
         if (!response.ok) {
           return response.text().then((text) => {
