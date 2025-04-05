@@ -9,11 +9,15 @@ import Report from "@pages/Report/Report";
 import Profile from "@pages/Profile/Profile";
 import Settings from "@pages/Settings/Settings";
 import Auth from "@pages/Auth/Auth";
+import useAuth from "@utils/useAuth";
+import useGlobalState from "@utils/useGlobalState";
 
 function App() {
   const [isAuthorized, setisAuthorized] = useState(
     localStorage.getItem("isAuth") === "true"
   );
+  const { setAuth, isAuthenticated } = useAuth();
+const {state}=useGlobalState()
 
   const handleAuth = () => {
     const accessKey = prompt("Enter the access key to proceed:");
@@ -31,13 +35,15 @@ function App() {
     if (!isAuthorized) handleAuth();
   }, [isAuthorized]);
 
-  if (!isAuthorized) return null;
-  
-  const isAuth = false;
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setAuth();
+    }
+  }, [isAuthenticated]);
 
   return (
     <Router>
-      {isAuth ? (
+      {state.isAuthenticated ? (
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/search" element={<Search />} />

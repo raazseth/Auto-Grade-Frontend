@@ -6,14 +6,33 @@ import "./index.css";
 import Text from "./Core/Text";
 import Button from "./Core/Button";
 import moment from "moment";
+import useGlobalState from "@utils/useGlobalState";
 
 interface ClassCardProps {
   classData: IClassroom;
 }
 
 const ClassCard: React.FC<ClassCardProps> = ({ classData }) => {
+  const { state, dispatch } = useGlobalState();
+
+  const activateClass = () => {
+    dispatch({
+      type: "SET_COURSE",
+      payload: classData,
+    });
+  };
+
   return (
-    <Box className="class-card">
+    <Box
+      className="class-card"
+      onClick={activateClass}
+      sx={{
+        border:
+          state.course?.id === classData.id
+            ? "1px solid var(--primary)"
+            : "transparent",
+      }}
+    >
       <Box
         display="flex"
         justifyContent="space-between"

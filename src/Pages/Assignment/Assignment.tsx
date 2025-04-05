@@ -1,84 +1,35 @@
 import Body from "@layout/Body";
 import "./index.css";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import Input from "@components/Core/Input";
 import Text from "@components/Core/Text";
 import Button from "@components/Core/Button";
 import Select from "@components/Core/Select";
 import { useEffect, useState } from "react";
 import AssignmentCard from "@components/AssignmentCard";
-import { getAllCourses, saveAssignment } from "../../APIs/misc";
-import { IClassroom } from "@typed/Misc";
-
-const DUMMY_ASSIGNMENTS = [
-  {
-    assignmentName: "History Research Paper",
-    assignmentDescription:
-      "Write a comprehensive research paper on the causes and consequences of World War II. Include analysis of political, economic, and social impacts across different nations. Minimum word count: 1500 words.",
-    assignmentType: "Essay",
-    maxMarks: 100,
-    dueDate: "2025-04-10",
-    dueTime: "23:59",
-  },
-  {
-    assignmentName: "Algebra Problem Set",
-    assignmentDescription:
-      "Solve 20 algebraic equations involving linear, quadratic, and polynomial expressions. Show all steps and reasoning for each solution.",
-    assignmentType: "Worksheet",
-    maxMarks: 50,
-    dueDate: "2025-04-05",
-    dueTime: "17:00",
-  },
-  {
-    assignmentName: "Physics Lab Report",
-    assignmentDescription:
-      "Conduct the pendulum experiment to measure acceleration due to gravity. Record observations, analyze data, and draw conclusions based on your findings.",
-    assignmentType: "Lab Report",
-    maxMarks: 75,
-    dueDate: "2025-04-08",
-    dueTime: "14:00",
-  },
-  {
-    assignmentName: "Creative Writing: Short Story",
-    assignmentDescription:
-      "Write a fictional short story inspired by a personal experience or a 'what if' scenario. Focus on character development, setting, and plot twists. Minimum word count: 1000 words.",
-    assignmentType: "Creative Writing",
-    maxMarks: 60,
-    dueDate: "2025-04-12",
-    dueTime: "22:00",
-  },
-  {
-    assignmentName: "Environmental Science Presentation",
-    assignmentDescription:
-      "Prepare a 5-minute presentation on climate change's effects on local biodiversity. Include images, statistics, and a call to action.",
-    assignmentType: "Presentation",
-    maxMarks: 80,
-    dueDate: "2025-04-15",
-    dueTime: "10:00",
-  },
-  {
-    assignmentName: "Software Development Project",
-    assignmentDescription:
-      "Build a basic to-do list web app using React. Include CRUD functionality and local storage for data persistence. Submit both code and a demo video.",
-    assignmentType: "Project",
-    maxMarks: 150,
-    dueDate: "2025-04-20",
-    dueTime: "23:59",
-  },
-];
+import {
+  getAllAssignments,
+  getAllCourses,
+  saveAssignment,
+} from "../../APIs/misc";
+import { IAssignment, IClassroom } from "@typed/Misc";
+import useGlobalState from "@utils/useGlobalState";
 
 const Assignment = () => {
   const [pageType, setPageType] = useState<"Create" | "View">("View");
-  const [data, setData] = useState(DUMMY_ASSIGNMENTS);
   const [bodyData, setbodyData] = useState<any>({});
   const [classes, setclasses] = useState<
     { label: string; value: string }[] | []
   >([]);
+  const [assignment, setassignment] = useState<IAssignment[] | []>([]);
+  const [isLoading, setisLoading] = useState(true);
+
+  const { state } = useGlobalState();
 
   const getCourses = async () => {
     try {
-      const res = (await getAllCourses()) as any;
-      console.log(res, "nsdjjdis");
+      const res = (await getAllCourses(state.token)) as any;
+
       if (!res.courses.length) {
         return;
       }
@@ -94,20 +45,46 @@ const Assignment = () => {
     }
   };
 
+  const getAssignment = async () => {
+    try {
+      const res = (await getAllAssignments(
+        state.course.id,
+        state.token
+      )) as any;
+      setassignment(res.courseWork || []);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setisLoading(false);
+    }
+  };
+
   useEffect(() => {
     getCourses();
-  }, []);
+    getAssignment();
+  }, [state.course]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setbodyData({ ...bodyData, [name]: value });
   };
 
   const handleSave = async () => {
+    setisLoading(true);
     try {
-      const response = await saveAssignment(bodyData);
-      console.log(response);
+      const response = await saveAssignment(
+        { ...bodyData, id: state.course?.id },
+        state.token
+      );
+
+      if (response) {
+        getAssignment();
+        setPageType("View");
+      }
     } catch (error) {
       console.log(error);
+    } finally {
+      setisLoading(false);
     }
   };
   const getPageType = () => {
@@ -115,9 +92,11 @@ const Assignment = () => {
       case "Create":
         return (
           <Box className="assignment-container">
-            <Text variant="h6" style={{ marginBottom: "10px" }}>
-              Create Assignment
-            </Text>
+            {state.course.id && (
+              <Text variant="h6" style={{ marginBottom: "10px" }}>
+                Create Assignment
+              </Text>
+            )}
             <Input
               parent={{ sx: { mt: 2 } }}
               label="Assignment Prompt"
@@ -164,7 +143,7 @@ const Assignment = () => {
               name="assignmentDescription"
               value={bodyData.assignmentDescription}
             />
-            {classes.length > 0 && (
+            {/* {classes.length > 0 && (
               <Select
                 parent={{ sx: { mt: 2 } }}
                 options={classes}
@@ -173,7 +152,7 @@ const Assignment = () => {
                 name="courseName"
                 value={bodyData.courseName}
               />
-            )}
+            )} */}
             <Select
               parent={{ sx: { mt: 2 } }}
               options={[
@@ -290,11 +269,8 @@ const Assignment = () => {
                 Cancel
               </Button>
               <Button
-                onClick={() => {
-                  console.log(bodyData);
-                  setData([...data, bodyData]);
-                  handleSave();
-                }}
+                onClick={handleSave}
+                isLoading={isLoading}
                 style={{ width: "40%", marginLeft: "8px" }}
               >
                 Create
@@ -324,18 +300,18 @@ const Assignment = () => {
                 Create Assignment
               </Text>
             </Box>
-
-            {data.map((assignment, index) => (
-              <AssignmentCard
-                title={assignment.assignmentName}
-                description={assignment.assignmentDescription}
-                type={assignment.assignmentType}
-                maxMarks={assignment.maxMarks}
-                dueDate={assignment.dueDate}
-                dueTime={assignment.dueTime}
-                key={index}
+            {!isLoading || assignment.length > 0 ? (
+              assignment.map((assignment: IAssignment) => (
+                <AssignmentCard key={assignment.id} assignment={assignment} />
+              ))
+            ) : (
+              <CircularProgress
+                size={24}
+                sx={{
+                  color: "var(--primary)",
+                }}
               />
-            ))}
+            )}
           </Box>
         );
 

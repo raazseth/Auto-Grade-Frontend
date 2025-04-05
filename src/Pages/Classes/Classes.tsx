@@ -3,15 +3,17 @@ import ClassCard from "@components/ClassCard";
 import Body from "@layout/Body";
 import { Box, CircularProgress } from "@mui/material";
 import { IClassroom } from "@typed/Misc";
+import useGlobalState from "@utils/useGlobalState";
 import { useEffect, useState } from "react";
 
 const Classes = () => {
   const [classes, setclasses] = useState<IClassroom[] | []>([]);
   const [isLoading, setisLoading] = useState(true);
+  const { state } = useGlobalState();
 
   const getCourses = async () => {
     try {
-      const res = (await getAllCourses()) as any;
+      const res = (await getAllCourses(state.token)) as any;
       setclasses(res.courses || []);
     } catch (error) {
       console.log(error);

@@ -1,0 +1,30 @@
+{
+  "assigment": {
+    "courseId": "762199467218",
+    "id": "753586102416",
+    "title": "Test pdf 2",
+    "description": "This is the description of the test assignment",
+    "state": "PUBLISHED",
+    "alternateLink": "https://classroom.google.com/c/NzYyMTk5NDY3MjE4/a/NzUzNTg2MTAyNDE2/details",
+    "creationTime": "2025-04-05T15:45:03.590Z",
+    "updateTime": "2025-04-05T15:45:02.581Z",
+    "dueDate": {
+      "year": 2025,
+      "month": 4,
+      "day": 8
+    },
+    "dueTime": {},
+    "maxPoints": 100,
+    "workType": "ASSIGNMENT",
+    "submissionModificationMode": "MODIFIABLE_UNTIL_TURNED_IN",
+    "assignment": {
+      "studentWorkFolder": {
+        "id": "11DcRCld99s5YOGScfcBq1SldiXfqo0TEAUD-nSc3HyFu1q2_iXlos7eYqK4cK6hxLIz5Z_CO"
+      }
+    },
+    "associatedWithDeveloper": true,
+    "assigneeMode": "ALL_STUDENTS",
+    "creatorUserId": "111172837403549118944"
+  }
+}
+

@@ -1,17 +1,20 @@
-import { API, TOKEN } from "@utils/Global";
+import { API } from "@utils/Global";
 
 export const saveAssignment = (
-  assignment: Record<string, any>
+  assignment: any,
+  token: string
 ): Promise<any> => {
   return new Promise((resolve, reject) => {
-    const formData = new FormData();
-    Object.keys(assignment).forEach((key) => {
-      formData.append(key, assignment[key]);
-    });
-
-    fetch("http://localhost:3000/assignments", {
+    console.log(assignment, "djsidi");
+    fetch(API.createAssignment, {
       method: "POST",
-      body: formData,
+      body: assignment?.materialFile ? assignment : JSON.stringify(assignment),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": assignment?.materialFile
+          ? "multipart/form-data"
+          : "application/json",
+      },
     })
       .then((response) => {
         if (!response.ok) {
@@ -33,11 +36,15 @@ export const saveAssignment = (
   });
 };
 
-export const getAllAssignments = (): Promise<any> => {
+export const getAllAssignments = (
+  courseID: string,
+  token: string
+): Promise<any> => {
   return new Promise((resolve, reject) => {
-    fetch("http://localhost:3000/assignments", {
+    fetch(API.getCourseWork + "/" + courseID, {
       method: "GET",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     })
@@ -61,12 +68,71 @@ export const getAllAssignments = (): Promise<any> => {
   });
 };
 
-export const getAllCourses = (): Promise<any> => {
+export const getAllCourses = (token: string): Promise<any> => {
   return new Promise((resolve, reject) => {
     fetch(API.getAllCourses, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            reject(
+              new Error(
+                `Failed to fetch assignments: ${response.status} ${response.statusText} - ${text}`
+              )
+            );
+          });
+        }
+        return response.json();
+      })
+      .then((data) => resolve(data))
+      .catch((error) => {
+        console.error("Error fetching assignments:", error);
+        reject(error);
+      });
+  });
+};
+
+export const getSubmissions = (token: string): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    fetch(API.getSubmissions, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            reject(
+              new Error(
+                `Failed to fetch assignments: ${response.status} ${response.statusText} - ${text}`
+              )
+            );
+          });
+        }
+        return response.json();
+      })
+      .then((data) => resolve(data))
+      .catch((error) => {
+        console.error("Error fetching assignments:", error);
+        reject(error);
+      });
+  });
+};
+
+export const postGradeAssignment = (payload: any, token: string): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    fetch(API.postGradeAssignment, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     })
