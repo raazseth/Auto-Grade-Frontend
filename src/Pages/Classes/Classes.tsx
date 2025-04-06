@@ -34,6 +34,7 @@ const Classes = () => {
           flexDirection: "row",
           justifyContent: "space-around",
           flexWrap: "wrap",
+          width: "76%",
         }}
       >
         {!isLoading || classes.length > 0 ? (

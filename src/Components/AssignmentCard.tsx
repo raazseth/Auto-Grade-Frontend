@@ -59,7 +59,9 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
       <CardContent>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Text variant="h6" component="div" gutterBottom>
-            {assignment.title}
+            {assignment.title.length > 28
+            ? `${assignment.title.substring(0, 28)}...`
+            : assignment.title}
           </Text>
           <Button
             variant="contained"
@@ -98,12 +100,19 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
             <Text variant="caption">Max Marks: {assignment.maxPoints}</Text>
           </Box>
 
-          <Box className="assignment-card__ time">
-            <FaCalendarAlt style={{ marginRight: 6 }} />
-            <Text variant="caption">{formatDueDate(assignment?.dueDate)}</Text>
-            <FaClock style={{ margin: "0 6px" }} />
-            <Text variant="caption">{formatDueTime(assignment?.dueTime)}</Text>
-          </Box>
+          {formatDueDate(assignment?.dueDate) &&
+            formatDueTime(assignment?.dueTime) && (
+              <Box className="assignment-card__ time">
+                <FaCalendarAlt style={{ marginRight: 6 }} />
+                <Text variant="caption">
+                  {formatDueDate(assignment?.dueDate)}
+                </Text>
+                <FaClock style={{ margin: "0 6px" }} />
+                <Text variant="caption">
+                  {formatDueTime(assignment?.dueTime)}
+                </Text>
+              </Box>
+            )}
         </Box>
         {/* {isGrade && <Box>assignment-card</Box>} */}
       </CardContent>
