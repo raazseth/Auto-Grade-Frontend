@@ -68,3 +68,11 @@ export interface IAssignment {
   assigneeMode: "ALL_STUDENTS" | "INDIVIDUAL_STUDENTS";
   creatorUserId: string;
 }
+
+export interface IGrades {
+  name: string;
+  email: string;
+  user: string;
+  feedback: string;
+  grade: number;
+}

@@ -31,9 +31,9 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    if (!isAuthorized) handleAuth();
-  }, [isAuthorized]);
+  // useEffect(() => {
+  //   if (!isAuthorized) handleAuth();
+  // }, [isAuthorized]);
 
   useEffect(() => {
     if (!isAuthenticated) {

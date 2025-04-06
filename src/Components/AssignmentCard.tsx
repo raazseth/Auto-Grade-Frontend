@@ -4,10 +4,11 @@ import { Box, CardContent } from "@mui/material";
 import "./index.css";
 import Text from "./Core/Text";
 import { FaBook, FaStar, FaCalendarAlt, FaClock } from "react-icons/fa";
-import { IAssignment } from "@typed/Misc";
+import { IAssignment, IGrades } from "@typed/Misc";
 import Button from "./Core/Button";
 import { postGradeAssignment } from "@api/misc";
 import useGlobalState from "@utils/useGlobalState";
+import { useNavigate } from "react-router-dom";
 
 interface AssignmentCardProps {
   assignment: IAssignment;
@@ -31,22 +32,22 @@ const formatDueTime = (dueTime: IAssignment["dueTime"]) => {
 };
 
 const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
-  const [grade, setGrade] = useState(null);
+  const [grade, setGrade] = useState<IGrades[]>([]);
   const [isLoading, setisLoading] = useState(false);
   const [isGrade, setIsGrade] = useState(false);
   const { state } = useGlobalState();
+  const navigate = useNavigate();
 
   const handleViewGrading = async () => {
     try {
       setisLoading(true);
-      const response = await postGradeAssignment(
+      const res = await postGradeAssignment(
         { courseId: state.course.id, assignmentId: assignment.id },
         state.token
       );
 
-      console.log(response,"postGradeAssignment")
-      if (response.status) {
-        setIsGrade(true);
+      if (res) {
+        setGrade(res?.gradedStudents || []);
       }
     } catch (error) {
       setGrade(null);
@@ -55,14 +56,15 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
     }
   };
 
+  console.log(grade);
   return (
     <Box className="assignment-card">
       <CardContent>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Text variant="h6" component="div" gutterBottom>
             {assignment.title.length > 28
-            ? `${assignment.title.substring(0, 28)}...`
-            : assignment.title}
+              ? `${assignment.title.substring(0, 28)}...`
+              : assignment.title}
           </Text>
           <Button
             variant="contained"
@@ -115,7 +117,29 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
               </Box>
             )}
         </Box>
-        {/* {isGrade && <Box>assignment-card</Box>} */}
+        {isGrade && (
+          <Box>
+            {grade.map((grd: IGrades) => (
+              <Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  <Text variant="h6">{grd.name}</Text>
+
+                  <Text style={{ marginLeft: "8px", opacity: 0.8 }}>
+                    {grd.email}
+                  </Text>
+
+                  <Text style={{ marginLeft: "auto" }}>{grd.grade}</Text>
+                </Box>
+                <Text>{grd.feedback}</Text>
+              </Box>
+            ))}
+          </Box>
+        )}
       </CardContent>
     </Box>
   );

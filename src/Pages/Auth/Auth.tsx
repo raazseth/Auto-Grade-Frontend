@@ -19,7 +19,7 @@ const Auth = () => {
 
     if (token) {
       localStorage.setItem("token", token);
-      localStorage.setItem("user", user ? JSON.stringify(user) : "");
+      localStorage.setItem("user", user);
       window.location.href = "/";
     }
   }, []);
