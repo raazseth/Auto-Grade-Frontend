@@ -22,7 +22,8 @@
 
   animation: shine 8s linear infinite;
   background-size: 200% auto; */
-  box-shadow: 0px 0px .9310142993927002px 0px rgba(0, 0, 0, .17), 0px 0px 3.1270833015441895px 0px rgba(0, 0, 0, .08), 0px 7px 14px 0px rgba(0, 0, 0, .05);
+  /* box-shadow: 0px 0px .9310142993927002px 0px rgba(0, 0, 0, .17), 0px 0px 3.1270833015441895px 0px rgba(0, 0, 0, .08), 0px 7px 14px 0px rgba(0, 0, 0, .05); */
+  box-shadow: rgba(17, 12, 46, 0.812) 0px 48px 100px 0px;
 }
 @keyframes shine {
   0% {

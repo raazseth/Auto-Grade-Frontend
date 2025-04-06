@@ -299,26 +299,36 @@ const Assignment = () => {
               }}
             >
               <Text variant="h6">View Assignment</Text>
-              <Text
-                variant="body2"
-                variantColor="secondary"
-                style={{ textDecoration: "underline", cursor: "pointer" }}
-                onClick={() => setPageType("Create")}
-              >
-                Create Assignment
-              </Text>
+              {!isLoading && (
+                <Text
+                  variant="body2"
+                  variantColor="secondary"
+                  style={{ textDecoration: "underline", cursor: "pointer" }}
+                  onClick={() => setPageType("Create")}
+                >
+                  Create Assignment
+                </Text>
+              )}
             </Box>
             {!isLoading || assignment.length > 0 ? (
               assignment.map((assignment: IAssignment) => (
                 <AssignmentCard key={assignment.id} assignment={assignment} />
               ))
             ) : (
-              <CircularProgress
-                size={24}
+              <Box
                 sx={{
-                  color: "var(--primary)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-              />
+              >
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    color: "var(--primary)",
+                  }}
+                />
+              </Box>
             )}
           </Box>
         );

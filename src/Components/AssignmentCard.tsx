@@ -44,6 +44,7 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
         state.token
       );
 
+      console.log(response,"postGradeAssignment")
       if (response.status) {
         setIsGrade(true);
       }
