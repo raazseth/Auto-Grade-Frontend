@@ -47,7 +47,11 @@ const ClassCard: React.FC<ClassCardProps> = ({ classData }) => {
         </Text>
         {classData.section && (
           <Chip
-            label={`Section: ${classData.section}`}
+            label={`${
+              classData.section.length > 15
+                ? `${classData.section.substring(0, 15)}...`
+                : classData.section
+            }`}
             size="small"
             sx={{ fontWeight: 500, borderRadius: "12px", padding: "3px 8px" }}
           />

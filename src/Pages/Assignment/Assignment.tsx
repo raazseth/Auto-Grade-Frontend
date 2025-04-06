@@ -23,7 +23,7 @@ const Assignment = () => {
   >([]);
   const [assignment, setassignment] = useState<IAssignment[] | []>([]);
   const [isLoading, setisLoading] = useState(true);
-
+  const [localFileValue, setlocalFileValue] = useState(null);
   const { state } = useGlobalState();
 
   const getCourses = async () => {
@@ -252,9 +252,17 @@ const Assignment = () => {
               label="Material File"
               type="file"
               placeholder="Upload Material File"
-              onChange={handleChange}
+              onChange={(e: any) => {
+                if (e.target?.files?.length > 0) {
+                  setbodyData({
+                    ...bodyData,
+                    materialFile: e.target.files[0],
+                  });
+                  setlocalFileValue(e.target.value);
+                }
+              }}
               name="materialFile"
-              value={bodyData.materialFile}
+              value={localFileValue}
             />
             <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
               <Button
