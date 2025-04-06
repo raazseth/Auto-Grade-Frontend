@@ -56,7 +56,11 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 
 const Input: FC<IInput> = ({ label, helperText, parent, ...props }) => {
   return (
-    <FormControl variant="standard" {...parent}>
+    <FormControl
+      variant="standard"
+      {...parent}
+      style={{ width: "100%", marginBottom: 8 }}
+    >
       {label && (
         <InputLabel shrink htmlFor="bootstrap-input">
           {label}

@@ -18,6 +18,7 @@ const createAPIRoutes = (
 };
 
 const apiRoutes = {
+  login: "/auth/login",
   loginWithGoogle: "/auth/google",
   createAssignment: "/assignment/createAssignment",
   getAllCourses: "/courses/fetchAllCourses",

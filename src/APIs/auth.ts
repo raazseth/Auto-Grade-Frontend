@@ -1,19 +1,20 @@
 import { API } from "@utils/Global";
 
-export const loginWithGoogle = (): Promise<any> => {
+export const login = (payload: any): Promise<any> => {
   return new Promise((resolve, reject) => {
-    fetch(API.loginWithGoogle, {
-      method: "GET",
+    fetch(API.login, {
+      method: "POST",
+      body: JSON.stringify(payload),
       headers: {
         "Content-Type": "application/json",
       },
-    },)
+    })
       .then((response) => {
         if (!response.ok) {
           return response.text().then((text) => {
             reject(
               new Error(
-                `Google login failed: ${response.status} ${response.statusText} - ${text}`
+                `login failed: ${response.status} ${response.statusText} - ${text}`
               )
             );
           });
@@ -22,7 +23,7 @@ export const loginWithGoogle = (): Promise<any> => {
       })
       .then((data) => resolve(data))
       .catch((error) => {
-        console.error("Error logging in with Google:", error);
+        console.error("Error logging in:", error);
         reject(error);
       });
   });
