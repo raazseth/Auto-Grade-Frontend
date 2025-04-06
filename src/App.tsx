@@ -17,7 +17,7 @@ function App() {
     localStorage.getItem("isAuth") === "true"
   );
   const { setAuth, isAuthenticated } = useAuth();
-const {state}=useGlobalState()
+  const { state, dispatch } = useGlobalState();
 
   const handleAuth = () => {
     const accessKey = prompt("Enter the access key to proceed:");
@@ -38,6 +38,11 @@ const {state}=useGlobalState()
   useEffect(() => {
     if (!isAuthenticated) {
       setAuth();
+      const classData = localStorage.getItem("COURSE");
+      dispatch({
+        type: "SET_COURSE",
+        payload: JSON.parse(classData),
+      });
     }
   }, [isAuthenticated]);
 

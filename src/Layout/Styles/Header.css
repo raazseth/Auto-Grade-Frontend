@@ -14,7 +14,7 @@
   align-items: center;
   margin-right: auto;
   cursor: pointer;
-  opacity: 0.8;
+  /* opacity: 0.8; */
   width: 70%;
 }
 .search-box:hover {

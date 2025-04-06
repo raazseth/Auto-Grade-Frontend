@@ -2,9 +2,8 @@ import { FC, useEffect, ReactNode, CSSProperties } from "react";
 import Footer, { FooterProps } from "./Footer";
 import Header from "./Header";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import "./Styles/Body.css";
-
 interface BodyProps {
   title?: string;
   showHeader?: boolean;
@@ -18,7 +17,7 @@ interface BodyProps {
 }
 
 const Body: FC<BodyProps> = ({
-  title = "GDG",
+  title = "AutoGrade",
   showHeader = true,
   showFooter = true,
   isLoading = false,
@@ -27,7 +26,7 @@ const Body: FC<BodyProps> = ({
   children,
 }) => {
   useEffect(() => {
-    document.title = title;
+    document.title = `${title} | AutoGrade`;
   }, [title]);
 
   return (

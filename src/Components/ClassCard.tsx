@@ -20,6 +20,7 @@ const ClassCard: React.FC<ClassCardProps> = ({ classData }) => {
       type: "SET_COURSE",
       payload: classData,
     });
+    localStorage.setItem("COURSE", JSON.stringify(classData));
   };
 
   return (

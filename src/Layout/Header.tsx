@@ -23,7 +23,7 @@ const Header = () => {
         </Tooltip>
       )}
       <IconButton>
-        <FaCog size={20} color="azure" style={{ opacity: 0.9 }} />
+        <FaCog size={20} color="azure" />
       </IconButton>
       <img src={state.user?.picture || pfp} alt="pfp" className="pfp" />
     </header>
