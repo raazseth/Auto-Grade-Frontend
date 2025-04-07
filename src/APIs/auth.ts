@@ -10,6 +10,7 @@ export const login = (payload: any): Promise<any> => {
       },
     })
       .then((response) => {
+        console.log(response.body,"res")
         if (!response.ok) {
           return response.text().then((text) => {
             reject(
