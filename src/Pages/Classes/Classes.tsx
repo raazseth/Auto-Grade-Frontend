@@ -1,5 +1,6 @@
 import { getAllCourses } from "@api/misc";
 import ClassCard from "@components/ClassCard";
+import Text from "@components/Core/Text";
 import Body from "@layout/Body";
 import { Box, CircularProgress } from "@mui/material";
 import { IClassroom } from "@typed/Misc";
@@ -28,15 +29,21 @@ const Classes = () => {
 
   return (
     <Body title="Classes" showHeader>
+      
       <Box
         className="assignment-container"
-        sx={{
+        sx={{width:"76%"}}
+       
+      >
+        <Text variant="h6">Select Class</Text>
+       
+       <Box  sx={{
+        display:"flex",
           flexDirection: "row",
           justifyContent: "space-around",
           flexWrap: "wrap",
-          width: "76%",
-        }}
-      >
+          width: "100%",
+        }}>
         {!isLoading || classes.length > 0 ? (
           classes.map((cls: IClassroom) => (
             <ClassCard key={cls.id} classData={cls} />
@@ -49,6 +56,7 @@ const Classes = () => {
             }}
           />
         )}
+        </Box> 
       </Box>
     </Body>
   );
