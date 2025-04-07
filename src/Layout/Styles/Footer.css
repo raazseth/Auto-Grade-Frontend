@@ -5,7 +5,7 @@
   transform: translateX(-50%);
   display: flex;
   justify-content: space-around;
-  width: 38%;
+  width: 36%;
   border-radius: .6rem;
   z-index: 1000;
   background-color: var(--white);

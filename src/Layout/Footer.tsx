@@ -27,11 +27,11 @@ const Footer: FC<FooterProps> = ({ type = "sticky" }) => {
       label: "Home",
       path: "/",
     },
-    {
-      icon: <FaSearch size={ICON_SIZE} color={ICON_COLOR} />,
-      label: "Search",
-      path: "/search",
-    },
+    // {
+    //   icon: <FaSearch size={ICON_SIZE} color={ICON_COLOR} />,
+    //   label: "Search",
+    //   path: "/search",
+    // },
     {
       icon: <FaChalkboardTeacher size={ICON_SIZE} color={ICON_COLOR} />,
       label: "Classes",

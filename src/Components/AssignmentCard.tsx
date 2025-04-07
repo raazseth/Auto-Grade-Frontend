@@ -49,6 +49,7 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
 
       if (res) {
         setGrade(res?.gradedStudents || []);
+        setIsGrade(true);
       }
     } catch (error) {
       setGrade(null);

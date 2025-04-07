@@ -55,8 +55,8 @@ const Auth = () => {
   return (
     <Box className="Auth">
       <Box className="Auth-Box">
-        <Text variant="h5" sx={{ fontWeight: 600, color: "#333" }}>
-          Welcome User 👋
+        <Text variant="h5" sx={{ marginBottom: "5px", fontWeight: 600, color: "#333" }}>
+          Welcome to AutoGrade
         </Text>
         <Box>
           <Input
