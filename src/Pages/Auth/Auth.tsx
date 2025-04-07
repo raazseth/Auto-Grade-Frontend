@@ -7,27 +7,26 @@ import Button from "@components/Core/Button";
 import { API } from "@utils/Global";
 import Input from "@components/Core/Input";
 import { login } from "@api/auth";
+import useAuth from "@utils/useAuth";
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setemail] = useState("prakashpramanickjsr1717@gmail.com");
   const [password, setpassword] = useState("1234");
   const [isPassword, setisPassword] = useState(true);
+  const { setAuth } = useAuth();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
     const user = urlParams.get("user");
 
-    console.log("Extracted Token:", token);
-    console.log("Extracted User:", user);
-
     if (token) {
       localStorage.setItem("token", token);
       localStorage.setItem("user", user);
       window.location.href = "/";
     }
-  }, []);
+  }, [window.location.search]);
 
   const handleAuth = () => {
     setIsLoading(true);
@@ -42,7 +41,8 @@ const Auth = () => {
         setIsLoading(true);
         const res = await login({ email, password });
         if (res) {
-          window.location.href = res?.redirectUrl;
+          setAuth(res.user, res.token);
+          window.location.reload();
         }
       } catch (error) {
         console.log(error);
