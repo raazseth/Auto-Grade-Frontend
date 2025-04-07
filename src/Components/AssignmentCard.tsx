@@ -34,6 +34,7 @@ const formatDueTime = (dueTime: IAssignment["dueTime"]) => {
 const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
   const [grade, setGrade] = useState<IGrades[]>([]);
   const [isLoading, setisLoading] = useState(false);
+  const [isReadMore, setisReadMore] = useState(false);
   const [isGrade, setIsGrade] = useState(false);
   const { state } = useGlobalState();
   const navigate = useNavigate();
@@ -88,7 +89,18 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
         </Box>
         {assignment.description && (
           <Text variant="body2" color="text.secondary" paragraph>
-            {assignment.description}
+            {assignment.description.length > 200 && !isReadMore
+              ? `${assignment.description.substring(0, 200)}...`
+              : assignment.description}
+
+            {assignment.description.length > 200 && (
+              <span
+                onClick={() => setisReadMore(!isReadMore)}
+                style={{ color: "blue", opacity: 0.8, cursor: "pointer" }}
+              >
+                {isReadMore ? " Show Less" : " Show More"}
+              </span>
+            )}
           </Text>
         )}
 

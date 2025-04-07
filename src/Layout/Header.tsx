@@ -14,6 +14,7 @@ import useGlobalState from "@utils/useGlobalState";
 import { useState } from "react";
 import useAuth from "@utils/useAuth";
 import { useNavigate } from "react-router-dom";
+import Text from "@components/Core/Text";
 
 const Header = () => {
   const { state, dispatch } = useGlobalState();
@@ -40,6 +41,16 @@ const Header = () => {
 
   return (
     <header className="header-main">
+      <Text
+        style={{
+          fontFamily: "Arimo, sans-serif",
+          color: "azure",
+          fontSize: 24,
+          marginRight: "1em",
+        }}
+      >
+        AutoGrade
+      </Text>
       <Box
         onClick={() => {
           navigate("/search");
