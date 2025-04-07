@@ -13,7 +13,7 @@ const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setemail] = useState("prakashpramanickjsr1717@gmail.com");
   const [password, setpassword] = useState("1234");
-  const [isPassword, setisPassword] = useState(true);
+  const [isPassword, setisPassword] = useState(false);
   const { setAuth } = useAuth();
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const Auth = () => {
           />
           <Input
             placeholder="Enter Your Password"
-            type={isPassword ? "password" : "text"}
+            type={isPassword ? "text" : "password"}
             label="Password"
             value={password}
             onChange={(e) => setpassword(e.target.value)}
@@ -85,13 +85,13 @@ const Auth = () => {
             }}
           >
             <Checkbox
-              checked={isPassword}
+              checked={!isPassword ? false : true}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setisPassword(event.target.checked);
               }}
               inputProps={{ "aria-label": "controlled" }}
             />
-            <Text>{!isPassword ? "Hide Password" : "Show Password"}</Text>
+            <Text>{isPassword ? "Hide Password" : "Show Password"}</Text>
           </Box>
           <Button
             sx={{ width: "100%", mt: 1 }}
