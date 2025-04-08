@@ -72,7 +72,7 @@ export interface IAssignment {
 export interface IGrades {
   name: string;
   email: string;
-  user: string;
+  userId: string;
   feedback: string;
   grade: number;
 }

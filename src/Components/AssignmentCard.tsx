@@ -9,7 +9,7 @@ import Button from "./Core/Button";
 import { postGradeAssignment } from "@api/misc";
 import useGlobalState from "@utils/useGlobalState";
 import { useNavigate } from "react-router-dom";
-
+import GradeCard from "./GradeCard";
 interface AssignmentCardProps {
   assignment: IAssignment;
   status?: "Pending" | "Completed" | "Overdue";
@@ -58,7 +58,6 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
     }
   };
 
-  console.log(grade);
   return (
     <Box className="assignment-card">
       <CardContent>
@@ -99,7 +98,7 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
                 onClick={() => setisReadMore(!isReadMore)}
                 style={{ color: "blue", opacity: 0.8, cursor: "pointer" }}
               >
-                {isReadMore ? " Show Less" : " Show More"}
+                {isReadMore ? "Show Less" : "Show More"}
               </span>
             )}
           </Text>
@@ -130,29 +129,11 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
               </Box>
             )}
         </Box>
-        {isGrade && (
-          <Box>
-            {grade.map((grd: IGrades) => (
-              <Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                  }}
-                >
-                  <Text variant="h6">{grd.name}</Text>
-
-                  <Text style={{ marginLeft: "8px", opacity: 0.8 }}>
-                    {grd.email}
-                  </Text>
-
-                  <Text style={{ marginLeft: "auto" }}>{grd.grade}</Text>
-                </Box>
-                <Text>{grd.feedback}</Text>
-              </Box>
-            ))}
-          </Box>
-        )}
+        {isGrade &&
+          grade.length > 0 &&
+          grade.map((grd: IGrades) => (
+            <GradeCard grade={grd} key={grd.userId} />
+          ))}
       </CardContent>
     </Box>
   );
