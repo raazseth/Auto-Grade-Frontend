@@ -101,7 +101,7 @@ const ClassCard: React.FC<ClassCardProps> = ({ classData }) => {
             boxShadow: "none",
           }}
         >
-          Open Classroom
+          Open In Classroom
         </Button>
       </Box>
     </Box>
