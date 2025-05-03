@@ -11,6 +11,7 @@ import Settings from "@pages/Settings/Settings";
 import Auth from "@pages/Auth/Auth";
 import useAuth from "@utils/useAuth";
 import useGlobalState from "@utils/useGlobalState";
+import PrivacyPolicy from "@pages/PrivacyPolicy/PrivacyPolicy";
 
 function App() {
   const [isAuthorized, setisAuthorized] = useState(
@@ -57,6 +58,7 @@ function App() {
           <Route path="/report" element={<Report />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       ) : (
