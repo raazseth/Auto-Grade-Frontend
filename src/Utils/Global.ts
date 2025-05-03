@@ -1,5 +1,5 @@
 const DEV = "http://localhost:3000/api";
-const PRODUCTION = "http://164.52.193.21:3000/api";
+const PRODUCTION = "https://autograde.fedkiit.com/api";
 
 export const BASE_URL = PRODUCTION;
 export const TOKEN =
