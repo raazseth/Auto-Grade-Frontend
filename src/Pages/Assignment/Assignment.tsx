@@ -82,7 +82,7 @@ const Assignment = () => {
         setPageType("View");
       }
     } catch (error) {
-      console.log(error);
+      alert("Error While Saving Assignment!")
     } finally {
       setisLoading(false);
     }
@@ -143,6 +143,8 @@ const Assignment = () => {
               name="assignmentDescription"
               value={bodyData.assignmentDescription}
             />
+
+
             {/* {classes.length > 0 && (
               <Select
                 parent={{ sx: { mt: 2 } }}
@@ -182,6 +184,20 @@ const Assignment = () => {
                 value={bodyData.numberOfQuestions}
               />
             )}
+            <Select
+              parent={{ sx: { mt: 2 } }}
+              options={[
+                {
+                  value: "TYPED/PRINTED",
+                  label: "Typed",
+                },
+                { value: "HANDWRITTEN", label: "Handwritten" },
+              ]}
+              label={"Submission Type"}
+              onChange={handleChange}
+              name="submissionType"
+              value={bodyData.submissionType}
+            />
             <Select
               parent={{ sx: { mt: 2 } }}
               label="Assignment Grade Term"

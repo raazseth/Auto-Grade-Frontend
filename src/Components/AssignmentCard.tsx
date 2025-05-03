@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import "./index.css";
 import moment from "moment";
 import { Box, CardContent } from "@mui/material";
-import "./index.css";
 import Text from "./Core/Text";
 import { FaBook, FaStar, FaCalendarAlt, FaClock } from "react-icons/fa";
 import { IAssignment, IGrades } from "@typed/Misc";
@@ -9,7 +9,8 @@ import Button from "./Core/Button";
 import { postGradeAssignment } from "@api/misc";
 import useGlobalState from "@utils/useGlobalState";
 import { useNavigate } from "react-router-dom";
-import GradeCard from "./GradeCard";
+// import r from '@pages/Report/r.json';
+
 interface AssignmentCardProps {
   assignment: IAssignment;
   status?: "Pending" | "Completed" | "Overdue";
@@ -53,6 +54,7 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
       }
     } catch (error) {
       setGrade(null);
+      alert("Error Occured While Grading...")
     } finally {
       setisLoading(false);
     }
@@ -61,7 +63,7 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
   return (
     <Box className="assignment-card">
       <CardContent>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Box display="flex" alignItems="center">
           <Text variant="h6" component="div" gutterBottom>
             {assignment.title.length > 28
               ? `${assignment.title.substring(0, 28)}...`
@@ -82,10 +84,38 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
               backgroundColor: isGrade
                 ? "var(--success-dark)"
                 : "var(--primary)",
+              marginLeft: "auto"
             }}
           >
             {isGrade ? "Graded" : "Grade Assignment"}
           </Button>
+          {
+            isGrade &&
+            <Button
+              onClick={() => {
+                navigate(
+                  '/report',
+                  {
+                    state: { grade, assignment }
+                  }
+                )
+              }}
+              sx={{
+                borderRadius: "30px",
+                fontWeight: 600,
+                width: "auto",
+                fontSize: 12,
+                padding: "4px 12px",
+                textTransform: "none",
+                boxShadow: "none",
+                marginLeft: 1,
+                backgroundColor: isGrade
+                  ? "var(--success-dark)"
+                  : "var(--primary)",
+              }}>
+              Check Report
+            </Button>
+          }
         </Box>
         {assignment.description && (
           <Text variant="body2" color="text.secondary" paragraph>
@@ -129,11 +159,11 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ assignment }) => {
               </Box>
             )}
         </Box>
-        {isGrade &&
+        {/* {isGrade &&
           grade.length > 0 &&
           grade.map((grd: IGrades) => (
             <GradeCard grade={grd} key={grd.userId} />
-          ))}
+          ))} */}
       </CardContent>
     </Box>
   );

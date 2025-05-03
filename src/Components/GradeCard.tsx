@@ -1,113 +1,123 @@
 import { Box } from "@mui/material";
 import { IGrades } from "@typed/Misc";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import Text from "./Core/Text";
 import "./index.css";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+import IconButton from '@mui/material/IconButton';
 
 interface IProps {
   grade: IGrades;
 }
 
 const GradeCard = ({ grade }: IProps) => {
-  const [isReadMore, setisReadMore] = useState(false);
+  // const [isReadMore, setisReadMore] = useState<boolean>(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState<number | "auto">(0);
+  const [isOpen, setisOpen] = useState<boolean>(false)
 
-  useEffect(() => {
-    if (contentRef.current) {
-      setContentHeight(isReadMore ? contentRef.current.scrollHeight : 92);
+  // useEffect(() => {
+  //   if (contentRef.current) {
+  //     setContentHeight(isReadMore ? contentRef.current.scrollHeight : 92);
+  //   }
+  // }, [isReadMore]);
+
+  const getGradeStyle = (grade: number) => {
+    if (grade >= 75) {
+      return {
+        backgroundColor: "#e6f4ea", // light green
+        color: "#2e7d32",           // dark green
+        border: "1px solid #2e7d32",
+      };
+    } else if (grade >= 50) {
+      return {
+        backgroundColor: "#fff8e1", // light yellow
+        color: "#f9a825",           // amber
+        border: "1px solid #f9a825",
+      };
+    } else {
+      return {
+        backgroundColor: "#fdecea", // light red
+        color: "#c62828",           // dark red
+        border: "1px solid #c62828",
+      };
     }
-  }, [isReadMore]);
+  };
+
+  const handleAccordion = () => {
+    setisOpen(!isOpen)
+  }
 
   return (
     <Box
       sx={{
         transition: "all 0.4s ease-in-out",
         borderRadius: "12px",
-        boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
-        padding: 2,
+        padding: 1.6,
         backgroundColor: "#fff",
         maxWidth: 800,
-        margin: "16px auto",
+        width: "90%",
+        margin: "12px auto",
       }}
+      className="assignment-card"
     >
-      <Box sx={{ display: "flex", alignItems: "center", marginBottom: 1 }}>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
         <Text
           variant="h6"
-          sx={{ fontWeight: "bold", fontSize: 16, color: "#333" }}
+          sx={{ fontWeight: "bold", fontSize: 17, color: "#333" }}
         >
           {grade.name}
         </Text>
+
         <Text
           sx={{
-            marginLeft: 1,
-            opacity: 0.7,
-            fontSize: "0.9rem",
-            color: "#555",
-          }}
-        >
-          {grade.email}
-        </Text>
-        <Text
-          sx={{
-            marginLeft: "auto",
+            marginLeft: "8px",
             fontWeight: 600,
-            backgroundColor: "#e0f7fa",
-            color: "#006064",
-            border: "1px solid #006064",
-            padding: "4px 12px",
+            padding: "0px 6px",
             borderRadius: "16px",
             fontSize: "0.9rem",
             display: "inline-block",
             minWidth: "50px",
             textAlign: "center",
+            ...getGradeStyle(grade.grade),
           }}
         >
           {grade.grade}
         </Text>
+        <IconButton
+          aria-label={isOpen ? 'collapse' : 'expand'}
+          onClick={handleAccordion}
+          size="small"
+          sx={{ ml: "auto" }}
+        >
+          {
+            !isOpen ?
+              <FaAngleDown onClick={handleAccordion} size={20} color="#222" />
+              : <FaAngleUp onClick={handleAccordion} size={20} color="#222" />
+          }
+        </IconButton>
+
       </Box>
-
-      {grade.feedback && (
-        <Box
-          sx={{
-            maxHeight: contentHeight,
-            overflow: "hidden",
-            transition: "max-height 0.5s ease",
-            position: "relative",
+      <Text
+        sx={{
+          opacity: 0.7,
+          fontSize: "0.8rem",
+          color: "#222",
+          mt: .5,
+          fontStyle: "italic"
+        }}
+      >
+        {grade.email}
+      </Text>
+      {isOpen && grade.feedback && (
+        <div
+          style={{
+            marginTop: "10px",
           }}
-        >
-          <Text
-            variant="body2"
-            color="text.secondary"
-            ref={contentRef}
-            sx={{
-              whiteSpace: "pre-line",
-              lineHeight: 1.6,
-            }}
-          >
-            {grade.feedback}
-          </Text>
-        </Box>
+          dangerouslySetInnerHTML={{ __html: grade.feedback }}
+        />
       )}
 
-      {grade.feedback.length > 200 && (
-        <Text
-          onClick={() => setisReadMore(!isReadMore)}
-          sx={{
-            color: "blue !important",
-            cursor: "pointer",
-            mt: 1,
-            fontSize: 14,
-            transition: "color 0.3s",
-            "&:hover": {
-              color: "#004ba0",
-              textDecoration: "underline",
-            },
-          }}
-        >
-          {isReadMore ? "Show Less" : "Show More"}
-        </Text>
-      )}
     </Box>
   );
 };

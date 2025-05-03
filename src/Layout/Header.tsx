@@ -62,7 +62,11 @@ const Header = () => {
       </Box>
       {state.course && (
         <Tooltip title="Selected Course">
-          <Box className="activeClass">
+          <Box
+            onClick={() => {
+              navigate("/classes");
+            }}
+            className="activeClass">
             <div className="activeClass-Indicator" />
             <span>{state.course.name}</span>
           </Box>

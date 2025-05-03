@@ -23,10 +23,32 @@ const ClassCard: React.FC<ClassCardProps> = ({ classData }) => {
     localStorage.setItem("COURSE", JSON.stringify(classData));
   };
 
+
+  const deActivateClass = () => {
+    if (state.course) {
+      const prompt = confirm("Are you sure, You want to un-select this course?")
+      if (prompt) {
+        dispatch({
+          type: "SET_COURSE",
+          payload: null,
+        });
+        localStorage.removeItem("COURSE")
+      }
+
+    }
+  }
+
+  const handleClass = () => {
+    if (state.course) {
+      return deActivateClass()
+    }
+    return activateClass()
+  }
+
   return (
     <Box
       className="class-card"
-      onClick={activateClass}
+      onClick={handleClass}
       sx={{
         border:
           state.course?.id === classData.id
@@ -47,11 +69,10 @@ const ClassCard: React.FC<ClassCardProps> = ({ classData }) => {
         </Text>
         {classData.section && (
           <Chip
-            label={`${
-              classData.section.length > 15
-                ? `${classData.section.substring(0, 15)}...`
-                : classData.section
-            }`}
+            label={`${classData.section.length > 15
+              ? `${classData.section.substring(0, 15)}...`
+              : classData.section
+              }`}
             size="small"
             sx={{ fontWeight: 500, borderRadius: "12px", padding: "3px 8px" }}
           />

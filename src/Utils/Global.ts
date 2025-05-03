@@ -1,5 +1,5 @@
 const DEV = "http://localhost:3000/api";
-const PRODUCTION = "https://autograde-k1ci.onrender.com/api";
+const PRODUCTION = "http://164.52.193.21:3000/api";
 
 export const BASE_URL = PRODUCTION;
 export const TOKEN =
