@@ -29,8 +29,8 @@ const Report = () => {
           </Box>
         }
         {
-          state?.grade?.gradedStudents?.length > 0 &&
-          state?.grade?.gradedStudents?.map((grd: IGrades) => (
+          state?.grade?.length > 0 &&
+          state?.grade?.map((grd: IGrades) => (
             <GradeCard grade={grd} key={grd.userId} />
           ))
         }
