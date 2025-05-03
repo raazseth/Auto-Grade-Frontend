@@ -45,8 +45,11 @@ const GradeCard = ({ grade }: IProps) => {
   };
 
   function extractPureHTML() {
-    const match = grade.feedback.match(/html\s*([\s\S]*?)\s*/);
-    return match ? match[1].trim() : grade.feedback;
+    return grade?.feedback
+      .replace(/```html/g, '')
+      .replace(/```/g, '')
+      .trim();
+
   }
 
   const handleAccordion = () => {
