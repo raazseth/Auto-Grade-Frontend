@@ -1,12 +1,17 @@
 import React from "react";
 import { Box, Chip } from "@mui/material";
-import { FaChalkboardTeacher, FaUser, FaLink } from "react-icons/fa";
 import { IClassroom } from "@typed/Misc";
 import "./index.css";
 import Text from "./Core/Text";
 import Button from "./Core/Button";
 import moment from "moment";
 import useGlobalState from "@utils/useGlobalState";
+import { useNavigate } from "react-router-dom";
+import {
+  RiCheckboxBlankCircleLine,
+  RiCheckboxBlankCircleFill,
+} from "react-icons/ri";
+import IconButton from '@mui/material/IconButton';
 
 interface ClassCardProps {
   classData: IClassroom;
@@ -14,6 +19,7 @@ interface ClassCardProps {
 
 const ClassCard: React.FC<ClassCardProps> = ({ classData }) => {
   const { state, dispatch } = useGlobalState();
+  const navigate = useNavigate();
 
   const activateClass = () => {
     dispatch({
@@ -23,32 +29,31 @@ const ClassCard: React.FC<ClassCardProps> = ({ classData }) => {
     localStorage.setItem("COURSE", JSON.stringify(classData));
   };
 
-
   const deActivateClass = () => {
-    if (state.course) {
-      const prompt = confirm("Are you sure, You want to un-select this course?")
+    if (state.course?.id === classData?.id) {
+      const prompt = confirm(
+        "Are you sure, You want to remove this course from select?"
+      );
       if (prompt) {
         dispatch({
           type: "SET_COURSE",
           payload: null,
         });
-        localStorage.removeItem("COURSE")
+        localStorage.removeItem("COURSE");
       }
-
     }
-  }
+  };
 
   const handleClass = () => {
-    if (state.course) {
-      return deActivateClass()
+    if (state.course?.id === classData?.id) {
+      return deActivateClass();
     }
-    return activateClass()
-  }
+    return activateClass();
+  };
 
   return (
     <Box
       className="class-card"
-      onClick={handleClass}
       sx={{
         border:
           state.course?.id === classData.id
@@ -58,7 +63,6 @@ const ClassCard: React.FC<ClassCardProps> = ({ classData }) => {
     >
       <Box
         display="flex"
-        justifyContent="space-between"
         alignItems="center"
         mb={1}
       >
@@ -74,9 +78,29 @@ const ClassCard: React.FC<ClassCardProps> = ({ classData }) => {
               : classData.section
               }`}
             size="small"
-            sx={{ fontWeight: 500, borderRadius: "12px", padding: "3px 8px" }}
+            sx={{
+              fontWeight: 500,
+              borderRadius: "12px",
+              padding: "3px 8px",
+              ml: "auto",
+              mr: 1,
+            }}
           />
         )}
+        <IconButton
+          onClick={handleClass}
+          size="small"
+        >
+          {state.course?.id === classData?.id ? (
+            <RiCheckboxBlankCircleFill size={24} color="var(--primary)" onClick={handleClass}
+            />
+          ) : (
+            <RiCheckboxBlankCircleLine size={24} color="var(--primary)" onClick={handleClass}
+            />
+          )}
+        </IconButton>
+
+
       </Box>
 
       <Text
@@ -124,6 +148,25 @@ const ClassCard: React.FC<ClassCardProps> = ({ classData }) => {
         >
           Open In Classroom
         </Button>
+        {state.course?.id === classData?.id && (
+          <Button
+            variant="contained"
+            onClick={() => {
+              navigate("/assignment");
+            }}
+            sx={{
+              borderRadius: "30px",
+              fontWeight: 600,
+              width: "100%",
+              fontSize: 12,
+              padding: "8px 0",
+              textTransform: "none",
+              boxShadow: "none",
+            }}
+          >
+            View Assignments
+          </Button>
+        )}
       </Box>
     </Box>
   );
